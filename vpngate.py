@@ -780,7 +780,9 @@ def build_outputs(
     duration_s: float,
     timed_out: int,
 ) -> dict[str, Any]:
-   available = [r for r in results if r.get("success")]
+    available = [r for r in results if r.get("success")]
+    countries: dict[str, dict[str, Any]] = {}
+    for node in available:
     countries: dict[str, dict[str, Any]] = {}
     for node in available:
         code = (node.get("country_code") or "").upper() or "??"
