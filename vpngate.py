@@ -783,8 +783,6 @@ def build_outputs(
     available = [r for r in results if r.get("success")]
     countries: dict[str, dict[str, Any]] = {}
     for node in available:
-    countries: dict[str, dict[str, Any]] = {}
-    for node in available:
         code = (node.get("country_code") or "").upper() or "??"
         name = node.get("country") or COUNTRY_ZH.get(code) or code
         group = countries.setdefault(
