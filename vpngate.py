@@ -321,8 +321,8 @@ class Config:
             optimal_api=os.environ.get("OPTIMAL_API", DEFAULT_OPTIMAL_API),
             nodes_url=derive_nodes_url(),
             min_success_ratio=_env_float("MIN_SUCCESS_RATIO", 0.0, minimum=0.0),
-            max_residential_per_country=_env_int("MAX_RESIDENTIAL_PER_COUNTRY", 20),
-            max_datacenter_per_country=_env_int("MAX_DATACENTER_PER_COUNTRY", 10),
+            max_residential_per_country=_env_int("MAX_RESIDENTIAL_PER_COUNTRY", 8),
+            max_datacenter_per_country=_env_int("MAX_DATACENTER_PER_COUNTRY", 5),
         )
 
 
@@ -780,7 +780,7 @@ def build_outputs(
     duration_s: float,
     timed_out: int,
 ) -> dict[str, Any]:
-    available = [r for r in results if r.get("success")]
+    available = [r for r in results if r.get("success") and r.get("latency_ms") and r.get("latency_ms") <= 500]
     countries: dict[str, dict[str, Any]] = {}
     for node in available:
         code = (node.get("country_code") or "").upper() or "??"
