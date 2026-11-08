@@ -51,7 +51,7 @@ DEFAULT_VPNGATE_API = "http://www.vpngate.net/api/iphone/"
 DEFAULT_VPNGATE_MIRROR = (
     "https://raw.githubusercontent.com/fdciabdul/Vpngate-Scraper-API/main/json/data.json"
 )
-DEFAULT_OPTIMAL_API = "https://bestcf.pages.dev/wetest/ipv4.txt,https://bestcf.pages.dev/uouin/all.txt,https://bestcf.pages.dev/vps789/top10.txt"
+DEFAULT_OPTIMAL_API = "https://bestcf.pages.dev/tiancheng/all.txt,https://bestcf.pages.dev/tiancheng2/all.txt,https://bestcf.pages.dev/s5gy/all.txt，https://raw.githubusercontent.com/ing00852/cof-ips/main/best_ips.txt"
 
 # 占位符检测：命中任意一个就认为用户还没配置
 PLACEHOLDER_MARKERS = ("你的", "YOUR_", "YOUR-", "example.com", "yourdomain")
@@ -321,8 +321,8 @@ class Config:
             optimal_api=os.environ.get("OPTIMAL_API", DEFAULT_OPTIMAL_API),
             nodes_url=derive_nodes_url(),
             min_success_ratio=_env_float("MIN_SUCCESS_RATIO", 0.0, minimum=0.0),
-            max_residential_per_country=_env_int("MAX_RESIDENTIAL_PER_COUNTRY", 8),
-            max_datacenter_per_country=_env_int("MAX_DATACENTER_PER_COUNTRY", 5),
+            max_residential_per_country=_env_int("MAX_RESIDENTIAL_PER_COUNTRY",20),
+            max_datacenter_per_country=_env_int("MAX_DATACENTER_PER_COUNTRY", 10),
         )
 
 
@@ -780,7 +780,7 @@ def build_outputs(
     duration_s: float,
     timed_out: int,
 ) -> dict[str, Any]:
-    available = [r for r in results if r.get("success") and r.get("latency_ms") and r.get("latency_ms") <= 500]
+    available = [r for r in results if r.get("success") and r.get("latency_ms") and r.get("latency_ms") <= 800]
     countries: dict[str, dict[str, Any]] = {}
     for node in available:
         code = (node.get("country_code") or "").upper() or "??"
